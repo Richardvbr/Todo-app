@@ -24,7 +24,7 @@ const todoList = {
 const addTodoBtn = document.getElementById('addTodoBtn');
 const addTodoTextInput = document.getElementById('addTodoTextInput');
 addTodoBtn.addEventListener('click', function(e){
-  if (addTodoTextInput.value === '') {
+  if (addTodoTextInput.value === '' || e.keyCode == 32) {
     return false;
   }
   else {
@@ -89,3 +89,10 @@ let view = {
   }
 };
 view.setUpEventListeners();
+
+// Prevent user to start to-do item with space
+const preventSpaceStart = document.getElementById('addTodoTextInput');
+preventSpaceStart.addEventListener('keyup', function() {
+  if (preventSpaceStart.value.charCodeAt(0) === 32)
+    preventSpaceStart.value = preventSpaceStart.value.slice(1);
+});
