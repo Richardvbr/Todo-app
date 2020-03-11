@@ -1,0 +1,160 @@
+/* Reset and main styling */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+h1 > span {
+  margin-left: 5px;
+}
+
+.container h3 {
+  margin-top: 0.5rem;
+  font-size: 1.15rem;
+  margin-bottom: 2rem;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  background-color: #26262b;
+}
+
+/* Main container */
+.container {
+  padding: 1rem 2rem;
+  max-width: 700px;
+  height: 400px;
+  margin: auto;
+  margin-top: 3rem;
+  text-align: center;
+}
+
+/* Form */
+.form {
+  display: flex;
+  justify-content: center;
+}
+
+.form input[type="text"] {
+  height: 1.75rem;
+  border: none;
+  border-radius: 5px;
+  padding-left: 0.25rem;
+}
+
+#ul-todoList {
+  width: 300px;
+  margin: auto;
+  list-style: none;
+  margin-top: 2rem;
+}
+
+.ul-container ul li {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 5px;
+  margin: 0.25rem 0;
+  padding: 0.5rem;
+  align-items: center;
+}
+
+.ul-container ul li:nth-child(odd) {
+  background-color: rgb(94, 94, 94);
+}
+
+/* Button styling */
+.deleteButton {
+  padding: 0.25rem;
+  border: none;
+  color: rgb(255, 112, 112);
+  background: none;
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: color .15s;
+}
+
+.deleteButton:hover {
+  color: red;
+}
+
+.checkButton {
+  padding: 0.25rem;
+  border: none;
+  color: green;
+  background: none;
+  cursor: pointer;
+  margin-left: 1rem;
+}
+
+.btn-displayTodos {
+  background-color: #fff;
+  color: #18191C;
+}
+
+.btn-clearAllBtn {
+  background-color: #7289da;
+  color: #fff;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 15px;
+  transition: all 0.25s;
+  font-family: 'Roboto', sans-serif;
+}
+
+.btn-clearAllBtn:hover {
+  background-color: #6679c0;
+}
+
+.btn-add {
+  padding: 0.33rem 0.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.25s;
+  font-family: 'Roboto', sans-serif;
+  margin-left: 0.5rem;
+  background-color: #7289da;
+  color: #fff;
+}
+
+.btn-add:hover {
+  background-color: #6679c0;
+}
+
+/* Media queries */
+@media(max-width: 800px) {
+  #navbar ul {
+    text-align: center;
+    margin: auto;
+    font-size: 1.1rem;
+  }
+
+  .container {
+    margin-top: 1rem;
+    padding: 1rem;
+  }
+
+  #ul-todoList {
+    width: 275px;
+  }
+
+  .container h1 {
+    font-size: 2rem;
+  }
+
+  .container h3 {
+    font-size: 1rem;
+  }
+}
