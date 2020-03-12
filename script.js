@@ -1,40 +1,50 @@
-// Get and display current date
+// Set main variables
 const ul = document.querySelector('ul-todoList')
+todos = [];
+
+// Get and display current date
 const currentDate = new Date();
 const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 document.getElementById('currentDate').innerHTML = currentDate.toLocaleDateString('en-us', dateOptions);
 
-// Contains all functions
-const todoList = {
-  todos: [],
-  // Adds a todo item as an object instead of just text and displays updated array
-  addTodo: function(todoText) {
-    this.todos.push({
-      todoText: todoText
-    });
-  },
-  // Deletes a todo item and displays updated array
-  deleteTodo: function(start) {
-    this.todos.splice(start, 1);
-    view.displayTodos();
-  },
-}
+// Main Functions
+function addTodo(todoText) {
+  todos.push( {
+    todoText: todoText
+  });
+  toggleClearBtn();
+};
 
-// Button: Add todo
-const addTodoBtn = document.getElementById('addTodoBtn');
-const addTodoTextInput = document.getElementById('addTodoTextInput');
-addTodoBtn.addEventListener('click', function(e){
-  if (addTodoTextInput.value === '' || e.keyCode == 32) {
-    return false;
+function deleteTodo(start) {
+  todos.splice(start, 1);
+  view.displayTodos();
+  toggleClearBtn();
+};
+
+function toggleClearBtn() {
+  if (todos.length !== 0) {
+    document.getElementById('clearAllBtn').style.display = 'inline-block';
   }
   else {
-    todoList.addTodo(addTodoTextInput.value);
-    addTodoTextInput.value = '';
-    view.displayTodos();
+    document.getElementById('clearAllBtn').style.display = 'none';
   }
-});
+}
+
+// Prevent user to start to-do item with a space
+document.body.onload = function preventSpace() {
+  const inputEl = document.getElementById('addTodoTextInput');
+  inputEl.addEventListener('keydown', function(e) {
+      if (inputEl.value.length === 0) {
+          if (e.keyCode === 32) {
+              e.preventDefault();
+          }
+      }
+  });
+}
 
 // Add item on enter
+// If input is empty = prevent submit
+// If input is valid = add to-do item, reset input field and display list
 document.getElementById('addTodoTextInput').onkeydown = function(e){
   if(e.keyCode == 13){
     e.preventDefault();
@@ -42,27 +52,45 @@ document.getElementById('addTodoTextInput').onkeydown = function(e){
       return false;
     }
     else {
-      todoList.addTodo(addTodoTextInput.value);
+      addTodo(addTodoTextInput.value);
       addTodoTextInput.value = '';
       view.displayTodos();
     }
   }
 };
 
+// Button: Add todo
+// If input is empty = prevent submit
+// If input is valid = add to-do item, reset input field and display list
+const addTodoBtn = document.getElementById('addTodoBtn');
+const addTodoTextInput = document.getElementById('addTodoTextInput');
+addTodoBtn.addEventListener('click', function(e){
+  if (addTodoTextInput.value === '') {
+    return false;
+  }
+  else {
+    addTodo(addTodoTextInput.value);
+    addTodoTextInput.value = '';
+    view.displayTodos();
+  }
+});
+
 // Button: Clear All
 const clearAllBtn = document.getElementById('clearAllBtn');
 clearAllBtn.addEventListener('click', function () {
-  todoList.todos = [];
+  todos = [];
   view.displayTodos();
+  toggleClearBtn()
 });
 
+// Create li elements
 let view = {
   displayTodos: function () {
     let todosUl = document.getElementById('ul-todoList');
     todosUl.innerHTML = '';
-    for (let i = 0  ; i < todoList.todos.length; i++) {
+    for (let i = 0  ; i < todos.length; i++) {
       let todosLi = document.createElement('li');
-      let todo = todoList.todos[i];
+      let todo = todos[i];
       todoTextLi = todo.todoText;
       todosLi.id = i;
       todosLi.textContent = todoTextLi;
@@ -70,29 +98,24 @@ let view = {
       todosUl.appendChild(todosLi);
     }
   },
+  // Create delete button element
   createDeleteButton: function() {
     let deleteButton = document.createElement('button');
     deleteButton.textContent = '';
     deleteButton.className = 'deleteButton fas fa-times fa-lg';
     return deleteButton;
   },
+  // Listen for clicks on delete button
   setUpEventListeners: function() {
     let myToDoList = document.querySelector('ul');
     myToDoList.addEventListener('click', function(e) {
       let elementClicked = e.target;
 
-      // Check for delete button
+      // Delete corresponding to-do item when its delete button was pressed
       if (elementClicked.className === 'deleteButton fas fa-times fa-lg') {
-        todoList.deleteTodo(parseInt(elementClicked.parentNode.id));
+        deleteTodo(parseInt(elementClicked.parentNode.id));
       }
     })
   }
 };
 view.setUpEventListeners();
-
-// Prevent user to start to-do item with space
-const preventSpaceStart = document.getElementById('addTodoTextInput');
-preventSpaceStart.addEventListener('keyup', function() {
-  if (preventSpaceStart.value.charCodeAt(0) === 32)
-    preventSpaceStart.value = preventSpaceStart.value.slice(1);
-});
