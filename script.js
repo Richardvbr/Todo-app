@@ -1,6 +1,15 @@
-// Set main variables
+// Set main ul variable
 const ul = document.querySelector('ul-todoList')
-todos = [];
+
+// Local storage
+// Check if todos exists in local storage, if not --> create empty array
+let todos = localStorage.getItem('items') ? 
+JSON.parse(localStorage.getItem('items')) : []
+
+// Local storage
+// Set local storage todo items and store todo items in data variable
+localStorage.setItem('items', JSON.stringify(todos))
+const data = JSON.parse(localStorage.getItem('items'))
 
 // Get and display current date
 const currentDate = new Date();
@@ -9,9 +18,8 @@ document.getElementById('currentDate').innerHTML = currentDate.toLocaleDateStrin
 
 // Main Functions
 function addTodo(todoText) {
-  todos.push( {
-    todoText: todoText
-  });
+  todos.push(todoText);
+  localStorage.setItem('items', JSON.stringify(todos))
   toggleClearBtn();
 };
 
@@ -80,7 +88,8 @@ const clearAllBtn = document.getElementById('clearAllBtn');
 clearAllBtn.addEventListener('click', function () {
   todos = [];
   view.displayTodos();
-  toggleClearBtn()
+  localStorage.clear();
+  toggleClearBtn();
 });
 
 // Create li elements
@@ -91,7 +100,7 @@ let view = {
     for (let i = 0  ; i < todos.length; i++) {
       let todosLi = document.createElement('li');
       let todo = todos[i];
-      todoTextLi = todo.todoText;
+      todoTextLi = todo;
       todosLi.id = i;
       todosLi.textContent = todoTextLi;
       todosLi.appendChild(this.createDeleteButton());
@@ -114,8 +123,22 @@ let view = {
       // Delete corresponding to-do item when its delete button was pressed
       if (elementClicked.className === 'deleteButton fas fa-times fa-lg') {
         deleteTodo(parseInt(elementClicked.parentNode.id));
+        // Remove item from local storage and updates local storage
+        data.splice(elementClicked.parentNode.id, 1);
+        localStorage.setItem('items', JSON.stringify(todos));
       }
     })
   }
 };
 view.setUpEventListeners();
+
+// Loop over local storage
+for (let i = 0; i < data.length; i++) {
+  if(data === 0) {
+    false;
+  }
+  else {
+    document.getElementById('clearAllBtn').style.display = 'inline-block';
+    view.displayTodos();
+  }
+};
