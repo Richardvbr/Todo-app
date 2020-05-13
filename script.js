@@ -72,7 +72,7 @@ document.getElementById('addTodoTextInput').onkeydown = function(e){
 // If input is valid = add to-do item, reset input field and display list
 const addTodoBtn = document.getElementById('addTodoBtn');
 const addTodoTextInput = document.getElementById('addTodoTextInput');
-addTodoBtn.addEventListener('click', function(e){
+addTodoBtn.addEventListener('click', function() {
   if (addTodoTextInput.value === '') {
     return false;
   }
@@ -85,7 +85,7 @@ addTodoBtn.addEventListener('click', function(e){
 
 // Button: Clear All
 const clearAllBtn = document.getElementById('clearAllBtn');
-clearAllBtn.addEventListener('click', function () {
+clearAllBtn.addEventListener('click', function() {
   todos = [];
   view.displayTodos();
   localStorage.clear();
@@ -121,7 +121,7 @@ let view = {
       let elementClicked = e.target;
 
       // Delete corresponding to-do item when its delete button was pressed
-      if (elementClicked.className === 'deleteButton fas fa-times fa-lg') {
+      if (elementClicked.classList.contains('deleteButton')) {
         deleteTodo(parseInt(elementClicked.parentNode.id));
         // Remove item from local storage and updates local storage
         data.splice(elementClicked.parentNode.id, 1);
