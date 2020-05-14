@@ -3,8 +3,8 @@ const ul = document.querySelector('ul-todoList')
 
 // Local storage
 // Check if todos exists in local storage, if not --> create empty array
-let todos = localStorage.getItem('items') ? 
-JSON.parse(localStorage.getItem('items')) : []
+let todos = localStorage.getItem('items') ?
+  JSON.parse(localStorage.getItem('items')) : []
 
 // Local storage
 // Set local storage todo items and store todo items in data variable
@@ -41,20 +41,20 @@ function toggleClearBtn() {
 // Prevent user to start to-do item with a space
 document.body.onload = function preventSpace() {
   const inputEl = document.getElementById('addTodoTextInput');
-  inputEl.addEventListener('keydown', function(e) {
-      if (inputEl.value.length === 0) {
-          if (e.keyCode === 32) {
-              e.preventDefault();
-          }
+  inputEl.addEventListener('keydown', function (e) {
+    if (inputEl.value.length === 0) {
+      if (e.keyCode === 32 || e.keyCode === 62) {
+        e.preventDefault();
       }
+    }
   });
 }
 
 // Add item on enter
 // If input is empty = prevent submit
 // If input is valid = add to-do item, reset input field and display list
-document.getElementById('addTodoTextInput').onkeydown = function(e){
-  if(e.keyCode == 13){
+document.getElementById('addTodoTextInput').onkeydown = function (e) {
+  if (e.keyCode == 13) {
     e.preventDefault();
     if (addTodoTextInput.value === '') {
       return false;
@@ -72,7 +72,7 @@ document.getElementById('addTodoTextInput').onkeydown = function(e){
 // If input is valid = add to-do item, reset input field and display list
 const addTodoBtn = document.getElementById('addTodoBtn');
 const addTodoTextInput = document.getElementById('addTodoTextInput');
-addTodoBtn.addEventListener('click', function() {
+addTodoBtn.addEventListener('click', function () {
   if (addTodoTextInput.value === '') {
     return false;
   }
@@ -85,7 +85,7 @@ addTodoBtn.addEventListener('click', function() {
 
 // Button: Clear All
 const clearAllBtn = document.getElementById('clearAllBtn');
-clearAllBtn.addEventListener('click', function() {
+clearAllBtn.addEventListener('click', function () {
   todos = [];
   view.displayTodos();
   localStorage.clear();
@@ -97,7 +97,7 @@ let view = {
   displayTodos: function () {
     let todosUl = document.getElementById('ul-todoList');
     todosUl.innerHTML = '';
-    for (let i = 0  ; i < todos.length; i++) {
+    for (let i = 0; i < todos.length; i++) {
       let todosLi = document.createElement('li');
       let todo = todos[i];
       todoTextLi = todo;
@@ -108,16 +108,16 @@ let view = {
     }
   },
   // Create delete button element
-  createDeleteButton: function() {
+  createDeleteButton: function () {
     let deleteButton = document.createElement('button');
     deleteButton.textContent = '';
     deleteButton.className = 'deleteButton fas fa-times fa-lg';
     return deleteButton;
   },
   // Listen for clicks on delete button
-  setUpEventListeners: function() {
+  setUpEventListeners: function () {
     let myToDoList = document.querySelector('ul');
-    myToDoList.addEventListener('click', function(e) {
+    myToDoList.addEventListener('click', function (e) {
       let elementClicked = e.target;
 
       // Delete corresponding to-do item when its delete button was pressed
@@ -134,7 +134,7 @@ view.setUpEventListeners();
 
 // Loop over local storage
 for (let i = 0; i < data.length; i++) {
-  if(data === 0) {
+  if (data === 0) {
     false;
   }
   else {
